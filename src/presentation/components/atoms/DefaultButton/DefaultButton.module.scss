@@ -1,0 +1,26 @@
+@import '../../../styles/colors.scss';
+
+.DefaultButton {
+    width: 100%;
+    max-width: 10rem;
+    height: 4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: solid 0.1rem;
+    outline: none;
+    border-radius: 1rem;
+
+    background: transparent;
+    color: $primary;
+
+    font-weight: 600;
+    transition: 0.5s;
+
+    &:hover {
+        background: $primary;
+        color: $white;
+    }
+}
