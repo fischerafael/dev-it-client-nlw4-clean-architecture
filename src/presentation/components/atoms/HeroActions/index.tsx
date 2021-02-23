@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import MainButton from '../MainButton'
 import styles from './HeroActions.module.scss'
@@ -10,7 +11,11 @@ const HeroActions = () => {
                 Utilize a técnica do Pomodoro para ser mais produtivo e mostre
                 as tarefas que você realizou jogando com outros Devs.
             </h2>
-            <MainButton>Cadastrar</MainButton>
+            <Link href="/login?state=register">
+                <a>
+                    <MainButton>Cadastrar</MainButton>
+                </a>
+            </Link>
         </div>
     )
 }

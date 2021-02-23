@@ -1,15 +1,24 @@
-import { createContext } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 interface Props {
     logged: boolean
     id: string
+    setLogged(e: any): void
+    setId(e: any): void
 }
 
 const AuthContext = createContext({} as Props)
 
 const AuthProvider = ({ children }) => {
+    const [logged, setLogged] = useState<boolean>(false)
+    const [id, setId] = useState<string>('')
+
+    useEffect(() => {
+        console.log('mudou o logado')
+    }, [logged])
+
     return (
-        <AuthContext.Provider value={{ logged: false, id: 'rs' }}>
+        <AuthContext.Provider value={{ logged, id, setLogged, setId }}>
             {children}
         </AuthContext.Provider>
     )

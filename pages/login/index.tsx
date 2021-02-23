@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { fetchServer } from '../../src/external/http-client'
+import React from 'react'
 
 import Logo from '../../src/presentation/components/atoms/Logo'
 import MainButton from '../../src/presentation/components/atoms/MainButton'
@@ -8,45 +7,20 @@ import CustomInput from '../../src/presentation/components/molecules/CustomInput
 import LoginForm from '../../src/presentation/components/molecules/LoginForm'
 import OneColumnContainer from '../../src/presentation/components/organisms/OneColumnContainer'
 import PageContainer from '../../src/presentation/components/templates/PageContainer'
+import useLogin from './useLogin'
 
 const Login = () => {
-    const [type, setType] = useState<'login' | 'register'>('register')
-    const [loading, setLoading] = useState(false)
-
-    const [loginInput, setLoginInput] = useState('')
-    const [registerInput, setRegisterInput] = useState('')
-
-    async function handleRegister(e: any) {
-        e.preventDefault()
-        setLoading(true)
-        try {
-            const { data, status } = await fetchServer.post('/devs', {
-                github: registerInput
-            })
-            console.log(data, status)
-            setLoading(false)
-        } catch (err) {
-            alert('Falhar ao cadastrar usuário. Tente novamente.')
-            setLoading(false)
-            setRegisterInput('')
-        }
-    }
-
-    async function handleLogin(e: any) {
-        e.preventDefault()
-        setLoading(true)
-        try {
-            const { data, status } = await fetchServer.post('/sessions', {
-                github: loginInput
-            })
-            console.log(data, status)
-            setLoading(false)
-        } catch (err) {
-            alert('Falhar ao acessar conta. Tente novamente.')
-            setLoading(false)
-            setLoginInput('')
-        }
-    }
+    const {
+        loading,
+        type,
+        setType,
+        setRegisterInput,
+        registerInput,
+        setLoginInput,
+        loginInput,
+        handleLogin,
+        handleRegister
+    } = useLogin()
 
     return (
         <PageContainer>

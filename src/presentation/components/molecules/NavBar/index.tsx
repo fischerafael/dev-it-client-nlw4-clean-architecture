@@ -8,7 +8,11 @@ const NavBar = () => {
     return (
         <div className={styles.NavBar}>
             <Logo />
-            <DefaultButton>Entrar</DefaultButton>
+            <Link href="/login?state=login">
+                <a>
+                    <DefaultButton>Entrar</DefaultButton>
+                </a>
+            </Link>
         </div>
     )
 }
