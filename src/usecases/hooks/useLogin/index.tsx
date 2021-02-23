@@ -15,6 +15,8 @@ const useLogin = () => {
     const [loginInput, setLoginInput] = useState('')
     const [registerInput, setRegisterInput] = useState('')
 
+    const [userData, setUserData] = useState({})
+
     const { setId, setLogged } = useContext(AuthContext)
 
     async function handleRegister(e: any) {
@@ -25,10 +27,12 @@ const useLogin = () => {
                 github: registerInput
             })
 
+            setUserData(data)
+
             setId(data._id)
             setLogged(true)
 
-            setLoading(false)
+            router.push(`/newtask?github=${data.github}`)
         } catch (err) {
             alert('Falhar ao cadastrar usuário. Tente novamente.')
             setLoading(false)
@@ -44,10 +48,12 @@ const useLogin = () => {
                 github: loginInput
             })
 
+            setUserData(data)
+
             setId(data._id)
             setLogged(true)
 
-            setLoading(false)
+            router.push(`/newtask?github=${data.github}`)
         } catch (err) {
             alert('Falhar ao acessar conta. Tente novamente.')
             setLoading(false)

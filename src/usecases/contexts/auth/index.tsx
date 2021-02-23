@@ -13,10 +13,6 @@ const AuthProvider = ({ children }) => {
     const [logged, setLogged] = useState<boolean>(false)
     const [id, setId] = useState<string>('')
 
-    useEffect(() => {
-        console.log('mudou o logado')
-    }, [logged])
-
     return (
         <AuthContext.Provider value={{ logged, id, setLogged, setId }}>
             {children}
