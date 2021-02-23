@@ -5,7 +5,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>Dev It - Seja um DEV mais produtivo</title>
+                <title>Dev.It - Seja um DEV mais produtivo</title>
             </Head>
             <Component {...pageProps} />
         </>

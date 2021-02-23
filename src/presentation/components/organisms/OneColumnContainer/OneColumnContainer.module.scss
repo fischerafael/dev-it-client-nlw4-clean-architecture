@@ -1,0 +1,15 @@
+@import '../../../styles/breakpoints.scss';
+
+.OneColumnContainer {
+    width: 90%;
+    max-width: 0.75 * $small;
+    min-height: 100vh;
+
+    padding: 4rem 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
