@@ -1,6 +1,22 @@
 @import '../../../styles/colors.scss';
+@import '../../../styles/breakpoints.scss';
 
 .HeroActions {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: $small) {
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        align-items: center;
+    }
+
     h1 {
         font-size: 3rem;
         font-weight: 900;
