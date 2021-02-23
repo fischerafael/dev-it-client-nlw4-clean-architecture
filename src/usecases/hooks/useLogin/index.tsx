@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState, useContext } from 'react'
-import { fetchServer } from '../../../src/external/http-client'
-import { AuthContext } from '../../../src/usecases/contexts/auth'
+import { fetchServer } from '../../../external/http-client'
+import { AuthContext } from '../../contexts/auth'
 
 const useLogin = () => {
     const router = useRouter()
@@ -21,7 +21,7 @@ const useLogin = () => {
         e.preventDefault()
         setLoading(true)
         try {
-            const { data, status } = await fetchServer.post('/devs', {
+            const { data } = await fetchServer.post('/devs', {
                 github: registerInput
             })
 
@@ -40,7 +40,7 @@ const useLogin = () => {
         e.preventDefault()
         setLoading(true)
         try {
-            const { data, status } = await fetchServer.post('/sessions', {
+            const { data } = await fetchServer.post('/sessions', {
                 github: loginInput
             })
 

@@ -7,7 +7,7 @@ import CustomInput from '../../src/presentation/components/molecules/CustomInput
 import LoginForm from '../../src/presentation/components/molecules/LoginForm'
 import OneColumnContainer from '../../src/presentation/components/organisms/OneColumnContainer'
 import PageContainer from '../../src/presentation/components/templates/PageContainer'
-import useLogin from './useLogin'
+import useLogin from '../../src/usecases/hooks/useLogin'
 
 const Login = () => {
     const {
