@@ -29,26 +29,24 @@ interface Props {
 }
 
 const Home = ({ data }: Props) => {
-    console.log(data.tasks.filter((task) => task.completed === false))
-
     const { logged } = useContext(AuthContext)
-
     const router = useRouter()
-
     useEffect(() => {
         !logged && router.push('/')
     }, [])
+
+    const { name, avatar } = data.dev
+
+    console.log(data.tasks.filter((task) => task.completed === false))
 
     return (
         <PageContainer>
             <ExperienceBar />
             <TwoColumnContainer>
                 <div>
-                    <Profile />
+                    <Profile name={name} avatar={avatar} />
                 </div>
-                <div>
-                    <Profile />
-                </div>
+                <div></div>
             </TwoColumnContainer>
         </PageContainer>
     )
