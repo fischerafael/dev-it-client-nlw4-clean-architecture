@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from './MainButton.module.scss'
 
-const MainButton = ({ children }) => {
-    return <button className={styles.MainButton}>{children}</button>
+interface Props {
+    children: ReactNode
+    onClick(e: any): Promise<void>
+}
+
+const MainButton = ({ children, onClick }: Props) => {
+    return (
+        <button onClick={onClick} className={styles.MainButton}>
+            {children}
+        </button>
+    )
 }
 
 export default MainButton
