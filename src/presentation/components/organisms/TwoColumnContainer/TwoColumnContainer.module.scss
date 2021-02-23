@@ -1,0 +1,17 @@
+@import '../../../styles/breakpoints.scss';
+
+.TwoColumnContainer {
+    width: 90%;
+    min-height: 80vh;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: $small) {
+        grid-template-columns: 1fr;
+    }
+}

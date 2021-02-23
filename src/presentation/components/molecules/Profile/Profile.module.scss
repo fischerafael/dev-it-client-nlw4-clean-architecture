@@ -1,0 +1,37 @@
+@import '../../../styles/colors.scss';
+
+.Profile {
+    display: flex;
+    align-items: center;
+
+    height: 20vh;
+    width: 100%;
+
+    border-bottom: 0.1rem solid $grey;
+
+    img {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+    }
+
+    div {
+        margin-left: 1.5rem;
+        width: 100%;
+
+        strong {
+            font-size: 1rem;
+            font-weight: 600;
+            color: $title;
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.75rem;
+        }
+
+        svg {
+            margin-right: 0.25rem;
+        }
+    }
+}

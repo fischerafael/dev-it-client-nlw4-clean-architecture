@@ -4,6 +4,9 @@
 .header {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 20vh;
 
     span {
         font-size: $default;
