@@ -1,0 +1,32 @@
+@import '../../../styles/colors.scss';
+@import '../../../styles/sizes.scss';
+
+.header {
+    display: flex;
+    align-items: center;
+
+    span {
+        font-size: $default;
+    }
+}
+
+.experienceBar {
+    flex: 1;
+    height: 0.25rem;
+    background: $grey;
+    margin: 0 1.5rem;
+    position: relative;
+    border-radius: 0.25rem;
+
+    div {
+        height: 0.25rem;
+        border-radius: 0.25rem;
+        background: $green;
+    }
+
+    span {
+        position: absolute;
+        top: 0.75rem;
+        transform: translateX(-50%);
+    }
+}
