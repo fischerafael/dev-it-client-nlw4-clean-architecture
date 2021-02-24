@@ -28,7 +28,7 @@ const Profile = ({ name, avatar, tasks, position }: Props) => {
         <div className={styles.Profile}>
             <img src={avatar} alt={name} />
             <div>
-                {position >= 0 && <span>{position + 3}</span>}
+                {position >= 0 && <span>{position + 4}</span>}
                 <strong>{name}</strong>
                 <p>
                     <FaArrowUp
