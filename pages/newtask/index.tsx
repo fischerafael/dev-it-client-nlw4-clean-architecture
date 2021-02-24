@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { fetchServer } from '../../src/external/http-client'
 import ExperienceBar from '../../src/presentation/components/molecules/ExperienceBar'
 import Profile from '../../src/presentation/components/molecules/Profile'
@@ -37,7 +37,22 @@ const Home = ({ data }: Props) => {
 
     const { name, avatar } = data.dev
 
-    console.log(data.tasks.filter((task) => task.completed === false))
+    const [timer, setTimer] = useState(60)
+    const [timerOn, setTimerOn] = useState(false)
+
+    function handleStartTimer() {
+        setTimerOn(true)
+    }
+
+    function handleStopTimer() {
+        setTimerOn(false)
+    }
+
+    useEffect(() => {
+        if (timerOn) {
+            setTimeout(() => setTimer((prevTime) => prevTime - 1), 1000)
+        }
+    }, [timerOn, timer])
 
     return (
         <PageContainer>
@@ -46,7 +61,9 @@ const Home = ({ data }: Props) => {
                 <div>
                     <Profile name={name} avatar={avatar} />
                 </div>
-                <div></div>
+                <div>{timer}</div>
+                <button onClick={handleStartTimer}>Start Count</button>
+                <button onClick={handleStopTimer}>Parar Count</button>
             </TwoColumnContainer>
         </PageContainer>
     )
