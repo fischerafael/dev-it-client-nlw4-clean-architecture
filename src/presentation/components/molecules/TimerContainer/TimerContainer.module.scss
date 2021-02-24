@@ -1,0 +1,31 @@
+@import '../../../styles/colors.scss';
+
+.TimerContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.1fr 1fr 1fr;
+    gap: 0.5rem;
+
+    margin: 2rem 0;
+
+    font-family: Rajdhani;
+    font-weight: 600;
+    color: $title;
+
+    height: 20vh;
+
+    span {
+        background: $white;
+        box-shadow: 5px 5px 10px rgba($color: $title, $alpha: 0.1);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 8rem;
+
+        &:nth-child(3) {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+}
