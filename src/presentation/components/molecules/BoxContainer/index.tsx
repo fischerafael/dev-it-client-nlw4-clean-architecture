@@ -16,7 +16,7 @@ const BoxContainer = ({ children, fixed }: Props) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'space-evenly',
-                    minHeight: '60vh',
+                    minHeight: '70vh',
                     width: '100%'
                 }
             }

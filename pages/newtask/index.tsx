@@ -90,10 +90,6 @@ const Home = ({ data }: Props) => {
                 }
             )
             console.log('success', responseData)
-            setScreenState('initial')
-            setTurnOnTimer(false)
-            setTimer(initialTime)
-            setTask('')
         } catch (err) {
             alert('Falhar ao cadastrar Task :(')
         }
@@ -130,25 +126,33 @@ const Home = ({ data }: Props) => {
                         <Logo />
                         {screenState === 'initial' && (
                             <>
+                                <p className="DefaultWarning">
+                                    Descreva a tarefa que você pretende realizar
+                                    pelos próximos 25 minutos.
+                                </p>
                                 <CustomInput
-                                    label="Defina uma Task"
+                                    label="Descrição da tarefa (no mínimo 15 caracteres)"
                                     value={task}
                                     onChange={(e) => setTask(e.target.value)}
                                 />
-
-                                <div>
-                                    <button
-                                        className="DefaultButton"
-                                        onClick={handleStartTimer}
-                                    >
-                                        Start Count
-                                    </button>
-                                </div>
+                                {task.length > 15 && (
+                                    <div>
+                                        <button
+                                            className="DefaultButton"
+                                            onClick={handleStartTimer}
+                                        >
+                                            Start Count
+                                        </button>
+                                    </div>
+                                )}
                             </>
                         )}
 
                         {screenState === 'during' && (
                             <>
+                                <p className="DefaultWarning">
+                                    Sua tarefa é {task}.
+                                </p>
                                 <p className="DefaultWarning">
                                     Manda a ver, {name}!
                                 </p>
