@@ -11,6 +11,10 @@
     align-items: center;
     justify-content: center;
 
+    @media (max-width: $medium) {
+        grid-template-columns: 1fr 2fr;
+    }
+
     @media (max-width: $small) {
         grid-template-columns: 1fr;
     }
