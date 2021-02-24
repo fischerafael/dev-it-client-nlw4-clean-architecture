@@ -41,13 +41,14 @@ const Home = ({ data }: Props) => {
     }, [])
 
     const { name, avatar } = data.dev
+    const { totalExp } = getTotalExp(data.tasks)
 
     const [screenState, setScreenState] = useState<
         'initial' | 'during' | 'after' | 'shame' | 'congratulations'
     >('initial')
 
     const [experiencePerTask] = useState(1000)
-    const [initialTime] = useState(10 * 1)
+    const [initialTime] = useState(60 * 15)
     const [timer, setTimer] = useState(initialTime)
     const [turnOnTimer, setTurnOnTimer] = useState(false)
 
@@ -118,7 +119,7 @@ const Home = ({ data }: Props) => {
             />
             <TwoColumnContainer>
                 <div>
-                    <Profile name={name} avatar={avatar} />
+                    <Profile name={name} avatar={avatar} totalExp={totalExp} />
                     <TimerContainer timeInSeconds={timer} />
                 </div>
                 <div>
@@ -128,7 +129,7 @@ const Home = ({ data }: Props) => {
                             <>
                                 <p className="DefaultWarning">
                                     Descreva a tarefa que você pretende realizar
-                                    pelos próximos 25 minutos.
+                                    pelos próximos 15 minutos.
                                 </p>
                                 <CustomInput
                                     label="Descrição da tarefa (no mínimo 15 caracteres)"
@@ -241,5 +242,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 permanent: false
             }
         }
+    }
+}
+
+export function getTotalExp(tasks: Task[]) {
+    const tasksExp = tasks.map((task) => task.durationInSeconds)
+    console.log(tasksExp)
+    const expSum = tasksExp.reduce((acc, current) => acc + current, 0)
+
+    return {
+        totalExp: expSum
     }
 }

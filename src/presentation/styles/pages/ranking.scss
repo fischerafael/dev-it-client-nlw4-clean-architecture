@@ -1,0 +1,139 @@
+@import '../colors.scss';
+@import '../breakpoints.scss';
+
+.RankingContainer {
+    width: 100%;
+    background: $background;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .RankingContent {
+        max-width: $large;
+        width: 90%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1 {
+            color: $title;
+        }
+    }
+}
+
+.Top3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    width: 90%;
+
+    margin: 2rem 0;
+}
+
+.CardRanking {
+    position: relative;
+    background: $white;
+
+    min-height: 62.5vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 1rem;
+
+    box-shadow: 5px 5px 10px rgba($color: $title, $alpha: 0.1);
+
+    img {
+        width: 100%;
+        height: 30vh;
+        object-fit: cover;
+        filter: brightness(75%);
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .CardPosition {
+        position: absolute;
+        top: 5vh;
+        font-size: 7.5rem;
+        font-weight: 900;
+        text-align: center;
+        color: $white;
+    }
+
+    .CardTitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+        color: $primary;
+
+        width: 100%;
+
+        a {
+            svg {
+                margin-left: 0.5rem;
+                width: 1.5rem;
+                height: 1.5rem;
+                cursor: pointer;
+                color: $title;
+
+                transition: 0.5s;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+    }
+
+    .CardDetails {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 2rem;
+
+        .CardLevel {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: $title;
+        }
+
+        .CardExp {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: $title;
+        }
+    }
+
+    p {
+        font-size: 0.75rem;
+        text-align: center;
+        color: $grey;
+        margin: 1rem;
+
+        position: absolute;
+        bottom: 8vh;
+    }
+
+    .CardButton {
+        position: absolute;
+        bottom: 0;
+
+        width: 100%;
+        margin: 0;
+
+        background: $primary;
+        color: $white;
+
+        &:hover {
+            background: $white;
+            color: $primary;
+        }
+    }
+}
