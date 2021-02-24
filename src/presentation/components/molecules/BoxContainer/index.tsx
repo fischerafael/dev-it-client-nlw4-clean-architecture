@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from './BoxContainer.module.scss'
 
-const BoxContainer = ({ children }) => {
-    return <div className={styles.BoxContainer}>{children}</div>
+interface Props {
+    fixed?: boolean
+    children: ReactNode
+}
+
+const BoxContainer = ({ children, fixed }: Props) => {
+    return (
+        <div
+            className={styles.BoxContainer}
+            style={
+                fixed && {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-evenly',
+                    minHeight: '60vh'
+                }
+            }
+        >
+            {children}
+        </div>
+    )
 }
 
 export default BoxContainer

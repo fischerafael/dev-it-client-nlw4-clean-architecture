@@ -42,30 +42,79 @@ const Home = ({ data }: Props) => {
 
     const { name, avatar } = data.dev
 
+    const [screenState, setScreenState] = useState<
+        'initial' | 'during' | 'after' | 'shame' | 'congratulations'
+    >('initial')
+
+    const [experiencePerTask] = useState(1000)
     const [initialTime] = useState(10 * 1)
     const [timer, setTimer] = useState(initialTime)
     const [turnOnTimer, setTurnOnTimer] = useState(false)
 
     const [score, setScore] = useState(0)
+    console.log('score', score)
 
     const [task, setTask] = useState('')
 
-    console.log(task)
-
     function handleStartTimer() {
         setTurnOnTimer(true)
+        setScreenState('during')
+    }
+
+    function handleShameScreen() {
+        setScreenState('shame')
+    }
+
+    function handleInitialScreen() {
+        setScreenState('initial')
+        setTurnOnTimer(false)
+        setTimer(initialTime)
+        setTask('')
+    }
+
+    async function handleSubmitTask(e: any) {
+        e.preventDefault()
+        setScreenState('congratulations')
+        try {
+            const { data: responseData, status } = await fetchServer.post(
+                `/devs/${data.dev._id}/tasks`,
+                {
+                    description: task,
+                    completed: true,
+                    duration: score
+                },
+                {
+                    headers: {
+                        auth: data.dev._id
+                    }
+                }
+            )
+            console.log('success', responseData)
+            setScreenState('initial')
+            setTurnOnTimer(false)
+            setTimer(initialTime)
+            setTask('')
+        } catch (err) {
+            alert('Falhar ao cadastrar Task :(')
+        }
     }
 
     useEffect(() => {
-        if (turnOnTimer && timer > 0) {
+        if (turnOnTimer === true && timer > 0) {
             setTimeout(() => setTimer((prevTime) => prevTime - 1), 1000)
         }
     }, [turnOnTimer, timer])
 
+    useEffect(() => {
+        if (timer === 0) {
+            setScreenState('after')
+        }
+    }, [timer])
+
     return (
         <PageContainer>
             <ExperienceBar
-                maxExp={600}
+                maxExp={experiencePerTask}
                 currentTime={timer}
                 initialTime={initialTime}
                 score={score}
@@ -77,19 +126,90 @@ const Home = ({ data }: Props) => {
                     <TimerContainer timeInSeconds={timer} />
                 </div>
                 <div>
-                    <BoxContainer>
+                    <BoxContainer fixed>
                         <Logo />
-                        <CustomInput
-                            label="Defina uma Task"
-                            value={task}
-                            onChange={(e) => setTask(e.target.value)}
-                        />
+                        {screenState === 'initial' && (
+                            <>
+                                <CustomInput
+                                    label="Defina uma Task"
+                                    value={task}
+                                    onChange={(e) => setTask(e.target.value)}
+                                />
 
-                        <div>
-                            <button onClick={handleStartTimer}>
-                                Start Count
-                            </button>
-                        </div>
+                                <div>
+                                    <button
+                                        className="DefaultButton"
+                                        onClick={handleStartTimer}
+                                    >
+                                        Start Count
+                                    </button>
+                                </div>
+                            </>
+                        )}
+
+                        {screenState === 'during' && (
+                            <>
+                                <p className="DefaultWarning">
+                                    Manda a ver, {name}!
+                                </p>
+                            </>
+                        )}
+
+                        {screenState === 'after' && (
+                            <>
+                                <h2>O tempo acabou</h2>
+                                <p className="DefaultWarning">
+                                    Você conseguiu terminar a task?
+                                </p>
+                                <div>
+                                    <button
+                                        onClick={handleSubmitTask}
+                                        className="DefaultButton"
+                                    >
+                                        Sim
+                                    </button>
+                                    <button
+                                        onClick={handleShameScreen}
+                                        className="DefaultButton"
+                                    >
+                                        Não
+                                    </button>
+                                </div>
+                            </>
+                        )}
+
+                        {screenState === 'shame' && (
+                            <>
+                                <h2>Que pena!</h2>
+                                <p className="DefaultWarning">
+                                    Você não completou a Task e não ganhará {''}
+                                    {experiencePerTask} pontos de experiência
+                                    desta vez.
+                                </p>
+                                <button
+                                    className="DefaultButton"
+                                    onClick={handleInitialScreen}
+                                >
+                                    Recomeçar
+                                </button>
+                            </>
+                        )}
+
+                        {screenState === 'congratulations' && (
+                            <>
+                                <h2>Que massa!</h2>
+                                <p className="DefaultWarning">
+                                    Você completou a Task ganhou {''}
+                                    {experiencePerTask} pontos de experiência.
+                                </p>
+                                <button
+                                    className="DefaultButton"
+                                    onClick={handleInitialScreen}
+                                >
+                                    Recomeçar
+                                </button>
+                            </>
+                        )}
                     </BoxContainer>
                 </div>
             </TwoColumnContainer>
