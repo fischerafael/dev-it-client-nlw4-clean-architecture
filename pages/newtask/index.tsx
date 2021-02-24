@@ -147,7 +147,7 @@ const Home = ({ data }: Props) => {
             />
             <TwoColumnContainer>
                 <div>
-                    <Profile name={name} avatar={avatar} totalExp={totalExp} />
+                    <Profile name={name} avatar={avatar} tasks={data.tasks} />
                     <TimerContainer timeInSeconds={timer} />
                 </div>
                 <div>
@@ -303,9 +303,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 export function getTotalExp(tasks: Task[]) {
-    const tasksExp = tasks.map((task) => task.durationInSeconds)
+    const tasksExp = tasks && tasks.map((task) => task.durationInSeconds)
     console.log(tasksExp)
-    const expSum = tasksExp.reduce((acc, current) => acc + current, 0)
+    const expSum =
+        tasksExp && tasksExp.reduce((acc, current) => acc + current, 0)
 
     return {
         totalExp: expSum

@@ -5,6 +5,7 @@ import { fetchServer } from '../src/external/http-client'
 import HeroActions from '../src/presentation/components/atoms/HeroActions'
 import HeroImage from '../src/presentation/components/atoms/HeroImage'
 import NavBar from '../src/presentation/components/molecules/NavBar'
+import Profile from '../src/presentation/components/molecules/Profile'
 import RankingCard from '../src/presentation/components/molecules/RankingCard'
 import OneColumnContainer from '../src/presentation/components/organisms/OneColumnContainer'
 import TwoColumnContainer from '../src/presentation/components/organisms/TwoColumnContainer'
@@ -13,6 +14,12 @@ import { getTotalExp } from './newtask'
 
 const Home = ({ data }: Props) => {
     const { rankedDevs } = getDevsRanked({ data })
+
+    const otherDevs = rankedDevs.filter(
+        (dev, index) => index !== 0 && index !== 1 && index !== 2
+    )
+
+    console.log('other', otherDevs)
 
     return (
         <PageContainer>
@@ -52,6 +59,18 @@ const Home = ({ data }: Props) => {
                         />
                     </div>
                 </div>
+            </div>
+
+            <div className="GeneralRanking">
+                {otherDevs.map((dev, index) => (
+                    <Profile
+                        position={index}
+                        key={dev.dev._id}
+                        name={dev.dev.name}
+                        avatar={dev.dev.avatar}
+                        tasks={dev.dev.tasks}
+                    />
+                ))}
             </div>
         </PageContainer>
     )

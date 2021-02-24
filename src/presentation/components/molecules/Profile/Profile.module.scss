@@ -19,6 +19,11 @@
         margin-left: 1.5rem;
         width: 100%;
 
+        span {
+            color: $primary;
+            margin-right: 0.5rem;
+        }
+
         strong {
             font-size: 1.5rem;
             font-weight: 900;

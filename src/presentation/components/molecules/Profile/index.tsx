@@ -1,11 +1,13 @@
 import React from 'react'
 import { FaArrowUp } from 'react-icons/fa'
+import { getTotalExp } from '../../../../../pages/newtask'
 import styles from './Profile.module.scss'
 
 interface Props {
     name: string
     avatar: string
-    totalExp: number
+    tasks?: any[]
+    position?: number
 }
 
 export function getLevel(exp: number) {
@@ -18,13 +20,15 @@ export function getLevel(exp: number) {
     }
 }
 
-const Profile = ({ name, avatar, totalExp }: Props) => {
+const Profile = ({ name, avatar, tasks, position }: Props) => {
+    const { totalExp } = getTotalExp(tasks)
     const { level } = getLevel(totalExp)
 
     return (
         <div className={styles.Profile}>
             <img src={avatar} alt={name} />
             <div>
+                {position >= 0 && <span>{position + 3}</span>}
                 <strong>{name}</strong>
                 <p>
                     <FaArrowUp
@@ -36,6 +40,7 @@ const Profile = ({ name, avatar, totalExp }: Props) => {
                     />
                     Nível {level} <span>{totalExp} XP</span>
                 </p>
+                <p></p>
             </div>
         </div>
     )
