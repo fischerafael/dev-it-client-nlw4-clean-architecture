@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { fetchServer } from '../../src/external/http-client'
@@ -47,15 +48,13 @@ const Home = ({ data }: Props) => {
         'initial' | 'during' | 'after' | 'shame' | 'congratulations'
     >('initial')
 
-    const [initialTimeInMinutes] = useState(5)
+    const [initialTimeInMinutes] = useState(15)
     const [experiencePerTask] = useState(1000)
-    const [initialTime] = useState(1 * initialTimeInMinutes)
+    const [initialTime] = useState(60 * initialTimeInMinutes)
     const [timer, setTimer] = useState(initialTime)
     const [turnOnTimer, setTurnOnTimer] = useState(false)
 
     const [score, setScore] = useState(0)
-
-    console.log('score', score)
 
     const [task, setTask] = useState('')
 
@@ -71,6 +70,10 @@ const Home = ({ data }: Props) => {
 
     function handleShameScreen() {
         setScreenState('shame')
+    }
+
+    function handlePauseTask() {
+        setTurnOnTimer((prevState) => !prevState)
     }
 
     function handleInitialScreen() {
@@ -158,18 +161,25 @@ const Home = ({ data }: Props) => {
                                     minutos.
                                 </p>
                                 <CustomInput
-                                    label="Descrição da tarefa (no mínimo 15 caracteres)"
+                                    label="No mínimo 15 caracteres"
                                     value={task}
                                     onChange={(e) => setTask(e.target.value)}
                                 />
                                 {task.length > 15 && (
-                                    <div>
+                                    <div className="ScreenActions">
                                         <button
                                             className="DefaultButton"
                                             onClick={handleStartTimer}
                                         >
-                                            Start Count
+                                            Iniciar tarefa
                                         </button>
+                                        <Link href="/">
+                                            <a>
+                                                <button className="DefaultButton">
+                                                    Sair
+                                                </button>
+                                            </a>
+                                        </Link>
                                     </div>
                                 )}
                             </>
@@ -177,18 +187,33 @@ const Home = ({ data }: Props) => {
 
                         {screenState === 'during' && (
                             <>
-                                <p className="DefaultWarning">
-                                    Sua tarefa é {task}.
-                                </p>
+                                <h2>{task}.</h2>
                                 <p className="DefaultWarning">
                                     Manda a ver, {name}!
                                 </p>
-                                <button
-                                    onClick={handleFinishedBeforeTimeOut}
-                                    className="DefaultButton"
-                                >
-                                    Terminei antes do tempo!
-                                </button>
+                                <div className="ScreenActions">
+                                    <button
+                                        onClick={handleFinishedBeforeTimeOut}
+                                        className="DefaultButton"
+                                    >
+                                        Terminei!
+                                    </button>
+                                    {turnOnTimer ? (
+                                        <button
+                                            onClick={handlePauseTask}
+                                            className="DefaultButton"
+                                        >
+                                            Pausar Tarefa
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={handlePauseTask}
+                                            className="DefaultButton"
+                                        >
+                                            Retomar Tarefa
+                                        </button>
+                                    )}
+                                </div>
                             </>
                         )}
 
@@ -198,7 +223,7 @@ const Home = ({ data }: Props) => {
                                 <p className="DefaultWarning">
                                     Você conseguiu terminar a task?
                                 </p>
-                                <div>
+                                <div className="ScreenActions">
                                     <button
                                         onClick={handleSubmitTask}
                                         className="DefaultButton"
@@ -222,6 +247,7 @@ const Home = ({ data }: Props) => {
                                     Você não completou a Task e não ganhará {''}
                                     {score} pontos de experiência desta vez.
                                 </p>
+
                                 <button
                                     className="DefaultButton"
                                     onClick={handleInitialScreen}
