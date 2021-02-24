@@ -45,7 +45,19 @@
     position: relative;
     background: $white;
 
-    min-height: 62.5vh;
+    height: 67.5vh;
+
+    @media (max-width: $medium) {
+        height: 65vh;
+    }
+
+    @media (max-width: $small) {
+        height: 60vh;
+    }
+
+    @media (max-width: $ultraSmall) {
+        height: 65vh;
+    }
 
     display: flex;
     flex-direction: column;
