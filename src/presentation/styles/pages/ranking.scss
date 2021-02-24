@@ -31,6 +31,14 @@
     width: 90%;
 
     margin: 2rem 0;
+
+    @media (max-width: $medium) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: $small) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .CardRanking {
