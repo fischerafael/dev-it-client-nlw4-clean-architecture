@@ -47,8 +47,9 @@ const Home = ({ data }: Props) => {
         'initial' | 'during' | 'after' | 'shame' | 'congratulations'
     >('initial')
 
+    const [initialTimeInMinutes] = useState(5)
     const [experiencePerTask] = useState(1000)
-    const [initialTime] = useState(60 * 15)
+    const [initialTime] = useState(60 * initialTimeInMinutes)
     const [timer, setTimer] = useState(initialTime)
     const [turnOnTimer, setTurnOnTimer] = useState(false)
 
@@ -129,7 +130,8 @@ const Home = ({ data }: Props) => {
                             <>
                                 <p className="DefaultWarning">
                                     Descreva a tarefa que você pretende realizar
-                                    pelos próximos 15 minutos.
+                                    pelos próximos {initialTimeInMinutes}{' '}
+                                    minutos.
                                 </p>
                                 <CustomInput
                                     label="Descrição da tarefa (no mínimo 15 caracteres)"
