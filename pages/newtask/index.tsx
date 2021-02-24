@@ -49,11 +49,12 @@ const Home = ({ data }: Props) => {
 
     const [initialTimeInMinutes] = useState(5)
     const [experiencePerTask] = useState(1000)
-    const [initialTime] = useState(60 * initialTimeInMinutes)
+    const [initialTime] = useState(1 * initialTimeInMinutes)
     const [timer, setTimer] = useState(initialTime)
     const [turnOnTimer, setTurnOnTimer] = useState(false)
 
     const [score, setScore] = useState(0)
+
     console.log('score', score)
 
     const [task, setTask] = useState('')
@@ -61,6 +62,11 @@ const Home = ({ data }: Props) => {
     function handleStartTimer() {
         setTurnOnTimer(true)
         setScreenState('during')
+    }
+
+    async function handleFinishedBeforeTimeOut() {
+        setScreenState('after')
+        setTurnOnTimer(false)
     }
 
     function handleShameScreen() {
@@ -78,8 +84,26 @@ const Home = ({ data }: Props) => {
         e.preventDefault()
         setScreenState('congratulations')
         try {
-            const { data: responseData, status } = await fetchServer.post(
-                `/devs/${data.dev._id}/tasks`,
+            const { data: resData } = await submitQuestionService(
+                data.dev._id,
+                task,
+                score
+            )
+            console.log('response data', resData)
+        } catch (err) {
+            console.log('erro', err)
+            alert('Falhar ao cadastrar Task :(')
+        }
+    }
+
+    async function submitQuestionService(
+        devId: string,
+        task: string,
+        score: number
+    ) {
+        try {
+            const { data, status } = await fetchServer.post(
+                `/devs/${devId}/tasks`,
                 {
                     description: task,
                     completed: true,
@@ -87,13 +111,13 @@ const Home = ({ data }: Props) => {
                 },
                 {
                     headers: {
-                        auth: data.dev._id
+                        auth: devId
                     }
                 }
             )
-            console.log('success', responseData)
+            return { data, status }
         } catch (err) {
-            alert('Falhar ao cadastrar Task :(')
+            return { data: undefined, status: 400 }
         }
     }
 
@@ -159,6 +183,12 @@ const Home = ({ data }: Props) => {
                                 <p className="DefaultWarning">
                                     Manda a ver, {name}!
                                 </p>
+                                <button
+                                    onClick={handleFinishedBeforeTimeOut}
+                                    className="DefaultButton"
+                                >
+                                    Terminei antes do tempo!
+                                </button>
                             </>
                         )}
 
@@ -190,8 +220,7 @@ const Home = ({ data }: Props) => {
                                 <h2>Que pena!</h2>
                                 <p className="DefaultWarning">
                                     Você não completou a Task e não ganhará {''}
-                                    {experiencePerTask} pontos de experiência
-                                    desta vez.
+                                    {score} pontos de experiência desta vez.
                                 </p>
                                 <button
                                     className="DefaultButton"
@@ -207,7 +236,7 @@ const Home = ({ data }: Props) => {
                                 <h2>Que massa!</h2>
                                 <p className="DefaultWarning">
                                     Você completou a Task ganhou {''}
-                                    {experiencePerTask} pontos de experiência.
+                                    {score} pontos de experiência.
                                 </p>
                                 <button
                                     className="DefaultButton"
