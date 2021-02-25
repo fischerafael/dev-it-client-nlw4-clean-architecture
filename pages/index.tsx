@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next'
+import Link from 'next/link'
 import React from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { fetchServer } from '../src/external/http-client'
@@ -63,13 +64,17 @@ const Home = ({ data }: Props) => {
 
             <div className="GeneralRanking">
                 {otherDevs.map((dev, index) => (
-                    <Profile
-                        position={index}
-                        key={dev.dev._id}
-                        name={dev.dev.name}
-                        avatar={dev.dev.avatar}
-                        tasks={dev.dev.tasks}
-                    />
+                    <Link href={`/${dev.dev.github}`}>
+                        <a>
+                            <Profile
+                                position={index}
+                                key={dev.dev._id}
+                                name={dev.dev.name}
+                                avatar={dev.dev.avatar}
+                                tasks={dev.dev.tasks}
+                            />
+                        </a>
+                    </Link>
                 ))}
             </div>
         </PageContainer>

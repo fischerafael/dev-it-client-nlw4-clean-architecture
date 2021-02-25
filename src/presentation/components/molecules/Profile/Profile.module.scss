@@ -10,6 +10,13 @@
 
     border-bottom: 0.1rem solid $grey;
 
+    transition: 0.5s;
+
+    &:hover {
+        background: white;
+        filter: brightness(91%);
+    }
+
     @media (max-width: $small) {
         padding: 0 1rem;
     }

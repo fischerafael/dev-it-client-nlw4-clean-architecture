@@ -26,6 +26,12 @@
     }
 }
 
+.GeneralRanking {
+    a {
+        cursor: pointer;
+    }
+}
+
 .Top3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

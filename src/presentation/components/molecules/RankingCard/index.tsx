@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { FaGithub } from 'react-icons/fa'
 import { getTotalExp } from '../../../../../pages/newtask'
@@ -22,6 +23,8 @@ const RankingCard = ({ avatar, name, github, tasks, position }: Props) => {
     const { totalExp } = getTotalExp(tasks)
     const { level } = getLevel(totalExp)
 
+    const { push } = useRouter()
+
     return (
         <div className="CardRanking">
             <img src={avatar} alt={name} />
@@ -40,7 +43,12 @@ const RankingCard = ({ avatar, name, github, tasks, position }: Props) => {
                 <span className="CardExp">{totalExp} XP</span>
             </div>
             <p>{tasks.length} tarefas realizadas</p>
-            <button className="DefaultButton CardButton">Ver Perfil</button>
+            <button
+                className="DefaultButton CardButton"
+                onClick={() => push(`/${github}`)}
+            >
+                Ver Perfil
+            </button>
         </div>
     )
 }
